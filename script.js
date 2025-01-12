@@ -26,8 +26,11 @@ const promise3 = new Promise((resolve, reject) => {
 	}, 3000);
 });
 
+const startTime = Date.now();
 Promise.all([promise1, promise2, promise3]).then((data) => {
 	// Remove the loading row
+	const endTime = Date.now();
+  const totalTime = (endTime - startTime) / 1000; // convert to seconds
 	output.removeChild(loadingRow);
 
 	// Iterate over the data and add rows to the table
@@ -38,10 +41,10 @@ Promise.all([promise1, promise2, promise3]).then((data) => {
 	});
 
 	// Add the total row
-	let totalRow = document.createElement('tr');
-	totalRow.innerHTML = `<td>Total</td><td>${data.reduce((a, b) => a + b, 0)}</td>`; // replace totalTime with your calculated total time
-	output.appendChild(totalRow);
-
+	 // Add the total row
+  let totalRow = document.createElement('tr');
+  totalRow.innerHTML = `<td>Total</td><td>${totalTime.toFixed(3)}</td>`; // use totalTime here
+  output.appendChild(totalRow);
 }).catch((r) => {
   console.log(r);
 });
